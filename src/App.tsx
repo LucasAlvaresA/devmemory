@@ -1,5 +1,6 @@
 import * as Styled from "./App.styles";
 import logoImage from "./assets/devmemory_logo.png";
+import { InfoItem } from "./components/InfoItem";
 
 const App = () => {
   return (
@@ -10,7 +11,8 @@ const App = () => {
         </Styled.LogoLink>
 
         <Styled.InfoArea>
-          ...
+          <InfoItem label="Tempo" value="00:00" />
+          <InfoItem label="Movimentos" value="0" />
         </Styled.InfoArea>
 
         <button>Reiniciar</button>
