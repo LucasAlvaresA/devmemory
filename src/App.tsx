@@ -7,6 +7,7 @@ import { InfoItem } from "./components/InfoItem";
 import { GridItem } from "./components/GridItem";
 import { GridItemType } from "./types/GridItemType";
 import { items } from "./data/items";
+import { formatTime } from "./helpers/formatTime";
 
 const App = () => {
   const [playing, setPlaying] = React.useState<boolean>(false);
@@ -16,6 +17,15 @@ const App = () => {
   const [gridItems, setGridItems] = React.useState<GridItemType[]>([]);
 
   React.useEffect(() => resetAndCreateGrid(), []);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      if (playing) {
+        setTimeElapsed(timeElapsed + 1);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [playing, timeElapsed]);
 
   const resetAndCreateGrid = () => {
     // reset game
@@ -62,7 +72,7 @@ const App = () => {
         </Styled.LogoLink>
 
         <Styled.InfoArea>
-          <InfoItem label="Time" value="00:00" />
+          <InfoItem label="Time" value={formatTime(timeElapsed)} />
           <InfoItem label="Moves" value="0" />
         </Styled.InfoArea>
 
