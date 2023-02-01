@@ -1,8 +1,13 @@
 import * as Styled from "./App.styles";
 import logoImage from "./assets/devmemory_logo.png";
+import RestartIcon from "./svgs/restart.svg";
+import { Button } from "./components/Button";
 import { InfoItem } from "./components/InfoItem";
 
 const App = () => {
+
+  const resetAndCreateGrid = () => {}
+
   return (
     <Styled.Container>
       <Styled.Info>
@@ -11,11 +16,15 @@ const App = () => {
         </Styled.LogoLink>
 
         <Styled.InfoArea>
-          <InfoItem label="Tempo" value="00:00" />
-          <InfoItem label="Movimentos" value="0" />
+          <InfoItem label="Time" value="00:00" />
+          <InfoItem label="Moves" value="0" />
         </Styled.InfoArea>
 
-        <button>Reiniciar</button>
+        <Button 
+          icon={RestartIcon}
+          label="Restart"
+          onClick={resetAndCreateGrid}
+        />
       </Styled.Info>
       <Styled.GridArea>
         ...
