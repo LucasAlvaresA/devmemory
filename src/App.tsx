@@ -27,6 +27,45 @@ const App = () => {
     return () => clearInterval(timer);
   }, [playing, timeElapsed]);
 
+  // Verify if opened are equal
+  React.useEffect(() => {
+    if (shownCount === 2) {
+      let opened = gridItems.filter(item => item.shown === true);
+      if (opened.length === 2) {
+        // If both are equal, make every shown permanent
+        if(opened[0].item === opened[1].item) {
+          let tempGrid = [...gridItems];
+          for(let i in tempGrid) {
+            if(tempGrid[i].shown) {
+              tempGrid[i].permanentShown = true;
+              tempGrid[i].shown = false;
+            }
+          }
+          setGridItems(tempGrid);;
+          setShownCount(0);
+          // if they are NOT equal, close all shown
+        } else {
+          setTimeout(() => {
+            let tempGrid = [...gridItems];
+            for (let i in tempGrid) {
+              tempGrid[i].shown = false;
+            }
+            setGridItems(tempGrid);;
+            setShownCount(0);
+          }, 1000)
+        }
+        setMoveCount(moveCount => moveCount + 1)
+      }
+    }
+  }, [shownCount, gridItems]);
+
+  // Verify if game is over
+  React.useEffect(() => {
+    if (moveCount > 0 && gridItems.every(item => item.permanentShown === true)) {
+      setPlaying(false);
+    }
+  }, [moveCount, gridItems])
+
   const resetAndCreateGrid = () => {
     // reset game
     setTimeElapsed(0);
@@ -61,7 +100,16 @@ const App = () => {
   }
 
   const handleItemClick = (index: number) => {
-    
+    if (playing && index !== null && shownCount < 2) {
+      let tempGrid = [...gridItems];
+
+      if(!tempGrid[index].permanentShown && !tempGrid[index].shown) {
+        tempGrid[index].shown = true;
+        setShownCount(shownCount + 1);
+      }
+
+      setGridItems(tempGrid);
+    } 
   }
 
   return (
@@ -73,7 +121,7 @@ const App = () => {
 
         <Styled.InfoArea>
           <InfoItem label="Time" value={formatTime(timeElapsed)} />
-          <InfoItem label="Moves" value="0" />
+          <InfoItem label="Moves" value={moveCount.toString()} />
         </Styled.InfoArea>
 
         <Button 
