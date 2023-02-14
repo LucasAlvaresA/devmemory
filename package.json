@@ -1,5 +1,4 @@
 {
-  "homepage": "https://lucasalvaresa.github.io/devmemory",
   "name": "devmemory",
   "version": "0.1.0",
   "private": true,
@@ -20,8 +19,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -45,7 +42,6 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26",
-    "gh-pages": "^5.0.0"
+    "@types/styled-components": "^5.1.26"
   }
 }
